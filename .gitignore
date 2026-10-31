@@ -1,0 +1,8 @@
+# Course Repository Root .gitignore
+node_modules/
+.env
+.env.local
+.env.*.local
+*.log
+.DS_Store
+Thumbs.db
