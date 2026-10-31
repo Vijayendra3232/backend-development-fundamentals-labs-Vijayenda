@@ -1,10 +1,10 @@
 # Lab 1: Node.js and Express server
 
 **Name:** Gorrela Vijayendra  
-**Registration Number:** 23B01AXXXX *(Replace with your actual Registration Number)*  
+**Registration Number:** 252U1R6085*  
 **Section:** Aurora · Year II Term II  
 **Course:** Backend Development Fundamentals  
-**Faculty:** Joel Prashanth D  
+**Faculty:** Yugandhar Gurjalwar  
 
 ---
 
