@@ -1,7 +1,7 @@
 /**
  * Lab 1 - Plain Node.js HTTP Server
  * Course: Backend Development Fundamentals (Year II Term II · Aurora)
- * Faculty: Joel Prashanth D
+ * Faculty: Yugandhar Gurjalwar
  * 
  * Objective: Create a plain web server using Node.js built-in 'http' module
  * that responds with "Hello" on port 3000.

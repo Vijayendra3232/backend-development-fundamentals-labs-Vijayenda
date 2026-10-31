@@ -116,10 +116,10 @@ draw_postman_card(
 # 3. Express Server /about Route
 about_body = json.dumps({
     "name": "Gorrela Vijayendra",
-    "registrationNumber": "23B01AXXXX",
+    "registrationNumber": "252U1R6085",
     "section": "Aurora - Year II Term II",
     "course": "Backend Development Fundamentals",
-    "faculty": "Joel Prashanth D"
+    "faculty": "Yugandhar Gurjalwar"
 }, indent=2, ensure_ascii=False)
 
 draw_postman_card(

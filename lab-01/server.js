@@ -1,7 +1,7 @@
 /**
  * Lab 1 - Express Web Server
  * Course: Backend Development Fundamentals (Year II Term II · Aurora)
- * Faculty: Joel Prashanth D
+ * Faculty: Yugandhar Gurjalwar
  * 
  * Objective: Build an Express server with required endpoints and 404 handler.
  */
@@ -34,10 +34,10 @@ app.get('/', (req, res) => {
 app.get('/about', (req, res) => {
   res.status(200).json({
     name: "Gorrela Vijayendra",
-    registrationNumber: process.env.STUDENT_REG_NO || "23B01AXXXX",
+    registrationNumber: process.env.STUDENT_REG_NO || "252U1R6085",
     section: "Aurora · Year II Term II",
     course: "Backend Development Fundamentals",
-    faculty: "Joel Prashanth D"
+    faculty: "Yugandhar Gurjalwar"
   });
 });
 

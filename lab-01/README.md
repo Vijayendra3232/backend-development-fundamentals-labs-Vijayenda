@@ -1,7 +1,7 @@
 # Lab 1: Node.js and Express server
 
 **Name:** Gorrela Vijayendra  
-**Registration Number:** 252U1R6085*  
+**Registration Number:** 252U1R6085  
 **Section:** Aurora · Year II Term II  
 **Course:** Backend Development Fundamentals  
 **Faculty:** Yugandhar Gurjalwar  
@@ -40,7 +40,7 @@ Available environment variables:
 | :--- | :--- | :--- |
 | `PORT` | Network port on which the web server listens | `3000` |
 | `STUDENT_NAME` | Student full name displayed in `/about` | `Gorrela Vijayendra` |
-| `STUDENT_REG_NO` | Student registration number | `23B01AXXXX` |
+| `STUDENT_REG_NO` | Student registration number | `252U1R6085` |
 | `STUDENT_SECTION` | Class section and cohort | `Aurora · Year II Term II` |
 
 > *Rule: Never commit real credentials or the `.env` file to version control. It is ignored by `.gitignore`.*

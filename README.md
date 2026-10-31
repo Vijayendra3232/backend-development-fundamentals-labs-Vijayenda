@@ -2,9 +2,9 @@
 
 **Course:** Backend Development Fundamentals  
 **Academic Year:** Year II Term II · Aurora  
-**Faculty:** Joel Prashanth D  
+**Faculty:** Yugandhar Gurjalwar  
 **Student Name:** Gorrela Vijayendra  
-**Registration Number:** 23B01AXXXX *(Replace with your actual Registration Number)*  
+**Registration Number:** 252U1R6085  
 **Section:** Aurora · Year II Term II  
 
 ---
