@@ -25,8 +25,8 @@
 ### Installation
 Clone the repository and navigate into the `lab-01` directory:
 ```bash
-git clone <your-repository-url>
-cd backend-course/lab-01
+git clone https://github.com/Vijayendra3232/backend-development-fundamentals-labs-Vijayenda.git
+cd backend-development-fundamentals-labs-Vijayenda/lab-01
 npm install
 ```
 
