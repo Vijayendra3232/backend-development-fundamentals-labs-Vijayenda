@@ -9,36 +9,76 @@
  */
 
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
 const { open } = require('sqlite');
 const sqlite3 = require('sqlite3');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const dbPath = path.join(__dirname, 'goodreads.db');
+
+// Determine DB path: On Vercel serverless, copy goodreads.db to /tmp so it is writable
+let dbPath = path.join(__dirname, 'goodreads.db');
+if (process.env.VERCEL) {
+  const tmpDbPath = path.join('/tmp', 'goodreads.db');
+  try {
+    if (!fs.existsSync(tmpDbPath) && fs.existsSync(dbPath)) {
+      fs.copyFileSync(dbPath, tmpDbPath);
+    }
+    dbPath = tmpDbPath;
+  } catch (err) {
+    console.error('Failed copying database to /tmp:', err);
+  }
+}
 
 let db = null;
 
-// Middleware to parse JSON request bodies
-app.use(express.json());
-
-/**
- * Task 3: initializeDBAndServer()
- * Opens the SQLite database connection and starts listening on the port
- * only after the connection succeeds.
- */
-const initializeDBAndServer = async () => {
-  try {
+// Helper to get or initialize database connection
+const getDB = async () => {
+  if (!db) {
     db = await open({
       filename: dbPath,
       driver: sqlite3.Database,
     });
-    app.listen(PORT, () => {
-      console.log(`Server Running at http://localhost:${PORT}/`);
-    });
+  }
+  return db;
+};
+
+// Middleware to parse JSON request bodies
+app.use(express.json());
+
+// Middleware to guarantee DB is initialized before handling requests (vital for Vercel/serverless)
+app.use(async (req, res, next) => {
+  try {
+    if (!db) {
+      db = await getDB();
+    }
+    req.db = db;
+    next();
+  } catch (error) {
+    console.error('DB Connection Middleware Error:', error);
+    res.status(500).json({ error: 'Database connection failed', message: error.message });
+  }
+});
+
+/**
+ * Task 3: initializeDBAndServer()
+ * Opens the SQLite database connection and starts listening on the port.
+ * On serverless platforms (Vercel), app.listen is skipped because Vercel manages the HTTP listener.
+ */
+const initializeDBAndServer = async () => {
+  try {
+    db = await getDB();
+    if (!process.env.VERCEL) {
+      app.listen(PORT, () => {
+        console.log(`Server Running at http://localhost:${PORT}/`);
+      });
+    }
   } catch (error) {
     console.error(`DB Error: ${error.message}`);
-    process.exit(1);
+    if (!process.env.VERCEL) {
+      process.exit(1);
+    }
   }
 };
 
@@ -53,6 +93,8 @@ app.get('/', (req, res) => {
     message: 'Welcome to Lab 2: SQLite Database & Books CRUD API',
     student: 'Gorrela Vijayendra',
     registrationNumber: '252U1R6085',
+    section: 'Aurora · Year II Term II',
+    faculty: 'Yugandhar Gurjalwar',
     endpoints: {
       getAllBooks: 'GET /books/',
       getBookById: 'GET /books/:bookId/',

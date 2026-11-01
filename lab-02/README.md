@@ -10,9 +10,11 @@
 
 ## Live Link
 
-**Deployment URL:** [https://lab-02-books-crud-api.onrender.com](https://lab-02-books-crud-api.onrender.com) *(or 'Not applicable' if running strictly locally; see deployment notes below)*
+**Deployment URL:** [https://lab-02-six-mu.vercel.app/books/](https://lab-02-six-mu.vercel.app/books/)
 
-> **Deployment Note:** If deploying on Render, Railway, or NxtWave Cloud IDE, set the start command to `npm start` and configure dynamic port reading via `process.env.PORT`. When running locally, Postman and CLI screenshots for every endpoint are verified and documented below.
+> **Deployment Notes:**
+> - **Vercel Deployment:** Configured via `vercel.json` using `@vercel/node`. Because Vercel functions run in a serverless read-only container, `server.js` copies `goodreads.db` to `/tmp/goodreads.db` on first boot so write operations (`POST`, `PUT`, `DELETE`) can execute without read-only filesystem errors.
+> - **Render / Railway / Cloud IDE:** To deploy as a persistent service, connect this repository, set Root Directory to `lab-02`, and set start command to `npm start`. All endpoints are documented and verified with Postman screenshots below.
 
 ---
 

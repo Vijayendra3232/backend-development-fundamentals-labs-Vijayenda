@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "lab-02/server.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["lab-02/goodreads.db", "lab-02/schema.sql"]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "lab-02/server.js"
+    }
+  ]
+}
