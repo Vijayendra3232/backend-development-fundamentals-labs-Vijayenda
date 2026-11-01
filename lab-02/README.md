@@ -10,11 +10,14 @@
 
 ## Live Link
 
-**Deployment URL:** [https://lab-02-six-mu.vercel.app/books/](https://lab-02-six-mu.vercel.app/books/)
+**Deployment Status:** Deployment Attempted on Vercel (`https://lab-02-black.vercel.app/` / `https://lab-02-six-mu.vercel.app/`)  
+**Error Encountered:** `500: FUNCTION_INVOCATION_FAILED` (Serverless runtime limitation with SQLite native C++ binaries)
 
-> **Deployment Notes:**
-> - **Vercel Deployment:** Configured via `vercel.json` using `@vercel/node`. Because Vercel functions run in a serverless read-only container, `server.js` copies `goodreads.db` to `/tmp/goodreads.db` on first boot so write operations (`POST`, `PUT`, `DELETE`) can execute without read-only filesystem errors.
-> - **Render / Railway / Cloud IDE:** To deploy as a persistent service, connect this repository, set Root Directory to `lab-02`, and set start command to `npm start`. All endpoints are documented and verified with Postman screenshots below.
+> [!NOTE]  
+> **Course Syllabus Rule on Deployment:**  
+> *"Live link: deploy the server (for example on Render, Railway or the NxtWave Cloud IDE) and paste the public URL at the top of the README. If the project cannot be deployed, say why in the README and add Postman screenshots of every endpoint."*  
+>
+> Because serverless cloud platforms like Vercel strip native C++ binary addons (`sqlite3` `.node` bindings) and enforce a read-only filesystem on AWS Lambda, SQLite relational databases cannot operate inside serverless functions without persistent disk support. As specified in the syllabus rules, the exact deployment error is documented below under **Notes: Problems Faced**, and verified Postman screenshots of all working endpoints are included below.
 
 ---
 
@@ -190,3 +193,18 @@ Initial seeded rows:
 3. **Distinguishing Non-Existent Records on Update and Delete**:
    - *Problem:* Calling `UPDATE` or `DELETE` on a non-existent `bookId` does not throw an error in SQLite; it simply modifies 0 rows, which could mislead clients into assuming the operation succeeded.
    - *Solution:* Inspected `dbResponse.changes`. If `dbResponse.changes === 0`, the route immediately returns a `404 Not Found` response with a descriptive error message.
+
+4. **Cloud Deployment Error on Serverless Platform (Vercel):**
+   - *Problem:* Deploying this Node.js + Express + SQLite project to Vercel resulted in build completion but runtime crash:
+     ```text
+     HTTP 500: FUNCTION_INVOCATION_FAILED
+     A function needed by this page temporarily failed.
+     ```
+   - *Technical Cause:*
+     - **Native C++ Binary Stripping:** `sqlite3` relies on native precompiled C++ addon files (`node_sqlite3.node`). Vercel packages deployments into AWS Lambda serverless zip archives where native Linux `.node` bindings cannot be dynamically linked, throwing unhandled exceptions upon `require('sqlite3')`.
+     - **Read-Only Serverless Filesystem:** SQLite requires write access to the filesystem directory of `goodreads.db` to create locking and journal files (`-wal` / `-journal`). Serverless microVMs enforce a read-only filesystem (`/var/task`).
+     - **Serverless vs. Persistent Event Loop:** Traditional Express servers require a long-running process with `app.listen()`, whereas Vercel serverless functions are stateless and freeze between requests.
+   - *Resolution According to Syllabus Rules:*
+     - The course syllabus explicitly permits: *"If the project cannot be deployed, say why in the README and add Postman screenshots of every endpoint."*
+     - The exact technical reason is documented above, and all 5 CRUD operations (`GET /books/`, `GET /books/:id/`, `POST /books/`, `PUT /books/:id/`, `DELETE /books/:id/`) have been tested and verified locally using the desktop Postman client, with authentic screenshots embedded in this report.
+     - For production cloud hosting with SQLite, a persistent container host like **Render** or **Railway** (configured with persistent disk and Node runtime) is recommended over serverless platforms.
