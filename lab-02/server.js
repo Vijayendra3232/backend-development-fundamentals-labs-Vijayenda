@@ -88,8 +88,19 @@ const getDB = async () => {
   return db;
 };
 
-// Middleware to parse JSON request bodies
+// Middleware to parse JSON and text request bodies
 app.use(express.json());
+app.use(express.text({ type: ['text/*', 'application/*'] }));
+app.use((req, res, next) => {
+  if (typeof req.body === 'string' && req.body.trim().startsWith('{')) {
+    try {
+      req.body = JSON.parse(req.body);
+    } catch (err) {
+      // ignore parse error if not valid JSON
+    }
+  }
+  next();
+});
 
 // Middleware to ensure DB is initialized before executing queries
 app.use(async (req, res, next) => {
