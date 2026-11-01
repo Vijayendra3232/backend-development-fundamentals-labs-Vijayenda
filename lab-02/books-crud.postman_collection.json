@@ -1,0 +1,148 @@
+{
+  "info": {
+    "_postman_id": "a89d71c2-3e4b-4b19-90b1-123456789abc",
+    "name": "Lab 2: Books CRUD API",
+    "description": "Course: Backend Development Fundamentals (Year II Term II · Aurora)\nFaculty: Yugandhar Gurjalwar\nStudent: Gorrela Vijayendra (252U1R6085)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. GET All Books",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            ""
+          ]
+        },
+        "description": "Retrieves all books ordered by id ASC"
+      },
+      "response": []
+    },
+    {
+      "name": "2. GET Book by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/1/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            "1",
+            ""
+          ]
+        },
+        "description": "Retrieves a single book by id (Harry Potter)"
+      },
+      "response": []
+    },
+    {
+      "name": "3. POST Add Book",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"JavaScript: The Good Parts\",\n  \"author\": \"Douglas Crockford\",\n  \"price\": 399,\n  \"pages\": 176\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            ""
+          ]
+        },
+        "description": "Adds a new book row into SQLite book table"
+      },
+      "response": []
+    },
+    {
+      "name": "4. PUT Update Book",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"JavaScript: The Good Parts (2nd Edition)\",\n  \"author\": \"Douglas Crockford\",\n  \"price\": 450,\n  \"pages\": 190\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/11/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            "11",
+            ""
+          ]
+        },
+        "description": "Updates an existing book by id"
+      },
+      "response": []
+    },
+    {
+      "name": "5. DELETE Book",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/11/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            "11",
+            ""
+          ]
+        },
+        "description": "Deletes book with id 11 from SQLite table"
+      },
+      "response": []
+    }
+  ]
+}
