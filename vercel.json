@@ -1,18 +1,8 @@
 {
-  "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "lab-02/api/index.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["lab-02/goodreads.db", "lab-02/schema.sql"]
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "lab-02/api/index.js"
+      "source": "/(.*)",
+      "destination": "/lab-02/api/index.js"
     }
   ]
 }

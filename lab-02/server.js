@@ -17,7 +17,7 @@ const sqlite3 = require('sqlite3');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Determine DB path: On Vercel serverless, copy goodreads.db to /tmp so it is writable
+// Resolve DB path: on Vercel serverless, use /tmp/goodreads.db so SQLite has write permissions
 let dbPath = path.join(__dirname, 'goodreads.db');
 if (process.env.VERCEL) {
   const tmpDbPath = path.join('/tmp', 'goodreads.db');
@@ -36,52 +36,82 @@ if (process.env.VERCEL) {
         }
       }
     }
-    if (fs.existsSync(tmpDbPath)) {
-      dbPath = tmpDbPath;
-    }
+    dbPath = tmpDbPath;
   } catch (err) {
-    console.error('Failed copying database to /tmp:', err);
+    console.error('Error preparing database in /tmp:', err);
+    dbPath = path.join('/tmp', 'goodreads.db');
   }
 }
 
 let db = null;
 
-// Helper to get or initialize database connection
+/**
+ * Helper: initialize or return database connection
+ * Auto-creates schema and seeds 10 books if the database file is newly created in /tmp
+ */
 const getDB = async () => {
-  if (!db) {
-    db = await open({
-      filename: dbPath,
-      driver: sqlite3.Database,
-    });
+  if (db) return db;
+
+  db = await open({
+    filename: dbPath,
+    driver: sqlite3.Database,
+  });
+
+  // Ensure table and initial records exist
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS book (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      author TEXT NOT NULL,
+      price INTEGER NOT NULL,
+      pages INTEGER NOT NULL
+    );
+  `);
+
+  const countResult = await db.get('SELECT COUNT(*) AS count FROM book;');
+  if (!countResult || countResult.count === 0) {
+    await db.exec(`
+      INSERT INTO book (title, author, price, pages) VALUES
+        ('Harry Potter and the Sorcerer''s Stone', 'J.K. Rowling', 450, 320),
+        ('To Kill a Mockingbird', 'Harper Lee', 350, 281),
+        ('The Great Gatsby', 'F. Scott Fitzgerald', 299, 180),
+        ('Pride and Prejudice', 'Jane Austen', 250, 279),
+        ('1984', 'George Orwell', 320, 328),
+        ('The Catcher in the Rye', 'J.D. Salinger', 380, 214),
+        ('The Hobbit', 'J.R.R. Tolkien', 499, 310),
+        ('Clean Code', 'Robert C. Martin', 650, 464),
+        ('Atomic Habits', 'James Clear', 420, 320),
+        ('The Pragmatic Programmer', 'David Thomas & Andrew Hunt', 599, 352);
+    `);
   }
+
   return db;
 };
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
 
-// Middleware to guarantee DB is initialized before handling requests (vital for Vercel/serverless)
+// Middleware to ensure DB is initialized before executing queries
 app.use(async (req, res, next) => {
   try {
     if (!db) {
       db = await getDB();
     }
-    req.db = db;
     next();
   } catch (error) {
-    console.error('DB Connection Middleware Error:', error);
+    console.error('Database middleware initialization failed:', error);
     res.status(500).json({ error: 'Database connection failed', message: error.message });
   }
 });
 
 /**
  * Task 3: initializeDBAndServer()
- * Opens the SQLite database connection and starts listening on the port.
- * On serverless platforms (Vercel), app.listen is skipped because Vercel manages the HTTP listener.
+ * Starts the server only after opening the database when running as a standalone server.
  */
 const initializeDBAndServer = async () => {
   try {
     db = await getDB();
+    // In serverless (Vercel), HTTP listening is handled by Vercel
     if (!process.env.VERCEL) {
       app.listen(PORT, () => {
         console.log(`Server Running at http://localhost:${PORT}/`);
