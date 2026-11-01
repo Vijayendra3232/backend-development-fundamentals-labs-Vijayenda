@@ -14,7 +14,7 @@
 | Lab Folder | Title | Status | Link |
 | :--- | :--- | :--- | :--- |
 | **`lab-01/`** | Node.js and Express server | Completed | [lab-01 README](lab-01/README.md) |
-| `lab-02/` | *Upcoming Lab* | Planned | `lab-02/` |
+| **`lab-02/`** | SQLite database and CRUD routes | Completed | [lab-02 README](lab-02/README.md) |
 | `lab-03/` | *Upcoming Lab* | Planned | `lab-03/` |
 | `lab-04/` | *Upcoming Lab* | Planned | `lab-04/` |
 | `lab-05/` | *Upcoming Lab* | Planned | `lab-05/` |
