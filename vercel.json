@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "lab-02/server.js",
+      "src": "lab-02/api/index.js",
       "use": "@vercel/node",
       "config": {
         "includeFiles": ["lab-02/goodreads.db", "lab-02/schema.sql"]
@@ -12,7 +12,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "lab-02/server.js"
+      "dest": "lab-02/api/index.js"
     }
   ]
 }

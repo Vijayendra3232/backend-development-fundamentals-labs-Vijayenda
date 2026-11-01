@@ -22,10 +22,23 @@ let dbPath = path.join(__dirname, 'goodreads.db');
 if (process.env.VERCEL) {
   const tmpDbPath = path.join('/tmp', 'goodreads.db');
   try {
-    if (!fs.existsSync(tmpDbPath) && fs.existsSync(dbPath)) {
-      fs.copyFileSync(dbPath, tmpDbPath);
+    if (!fs.existsSync(tmpDbPath)) {
+      const candidatePaths = [
+        path.join(__dirname, 'goodreads.db'),
+        path.join(process.cwd(), 'goodreads.db'),
+        path.join(process.cwd(), 'lab-02', 'goodreads.db'),
+        path.join(__dirname, '..', 'goodreads.db'),
+      ];
+      for (const candidate of candidatePaths) {
+        if (fs.existsSync(candidate)) {
+          fs.copyFileSync(candidate, tmpDbPath);
+          break;
+        }
+      }
     }
-    dbPath = tmpDbPath;
+    if (fs.existsSync(tmpDbPath)) {
+      dbPath = tmpDbPath;
+    }
   } catch (err) {
     console.error('Failed copying database to /tmp:', err);
   }
