@@ -10,14 +10,17 @@
 
 ## Live Link
 
-**Deployment Status:** Localhost SQLite Architecture (`http://localhost:3000/`)  
-**Deployment Note:** As documented under course guidelines, SQLite requires persistent local disk storage and native compiled C++ bindings (`sqlite3` `.node` binaries) that are incompatible with ephemeral serverless runtimes.
+- **Production Live URL (Railway):** [https://lab-03-production.up.railway.app](https://lab-03-production.up.railway.app)
+- **Deployment Platform:** Railway (`backend-development-fundamentals`)
+- **Service Name:** `lab-03`
+- **Environment:** `production`
+- **Deployment Status:** `SUCCESS` (Active, Containerized Node.js with native SQLite runtime)
 
-> [!NOTE]  
-> **Course Syllabus Rule on Deployment:**  
-> *"Live link: deploy the server (for example on Render, Railway or the NxtWave Cloud IDE) and paste the public URL at the top of the README. If the project cannot be deployed, say why in the README and add Postman screenshots of every endpoint."*  
->  
-> Full Postman test coverage, automated test collections, and visual result cards for every endpoint (success and failure cases) are provided in the [Screenshots](#screenshots) section below and via the included [`books-api-lab3.postman_collection.json`](books-api-lab3.postman_collection.json).
+### Live Endpoint Quick Links:
+- **API Overview & Welcome:** [https://lab-03-production.up.railway.app/](https://lab-03-production.up.railway.app/)
+- **Search & Sort (`Potter` ordered by `price DESC`):** [https://lab-03-production.up.railway.app/books?search_q=Potter&order_by=price&order=DESC](https://lab-03-production.up.railway.app/books?search_q=Potter&order_by=price&order=DESC)
+- **Price Range Filter (`min_price=300&max_price=400`):** [https://lab-03-production.up.railway.app/books?min_price=300&max_price=400](https://lab-03-production.up.railway.app/books?min_price=300&max_price=400)
+- **Single Book (ID 1):** [https://lab-03-production.up.railway.app/books/1](https://lab-03-production.up.railway.app/books/1)
 
 ---
 

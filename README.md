@@ -11,11 +11,11 @@
 
 ## Course Lab Index
 
-| Lab Folder | Title | Status | Link |
-| :--- | :--- | :--- | :--- |
-| **`lab-01/`** | Node.js and Express server | Completed | [lab-01 README](lab-01/README.md) |
-| **`lab-02/`** | SQLite database and CRUD routes | Completed | [lab-02 README](lab-02/README.md) |
-| **`lab-03/`** | REST API, query parameters, validation, debugging | Completed | [lab-03 README](lab-03/README.md) |
+| Lab Folder | Title | Status | Link | Live Deployment |
+| :--- | :--- | :--- | :--- | :--- |
+| **`lab-01/`** | Node.js and Express server | Completed | [lab-01 README](lab-01/README.md) | Localhost |
+| **`lab-02/`** | SQLite database and CRUD routes | Completed | [lab-02 README](lab-02/README.md) | Localhost (Vercel documented) |
+| **`lab-03/`** | REST API, query parameters, validation, debugging | Completed | [lab-03 README](lab-03/README.md) | [Railway Live URL](https://lab-03-production.up.railway.app) |
 | `lab-04/` | *Upcoming Lab* | Planned | `lab-04/` |
 | `lab-05/` | *Upcoming Lab* | Planned | `lab-05/` |
 | `lab-06/` | *Upcoming Lab* | Planned | `lab-06/` |
