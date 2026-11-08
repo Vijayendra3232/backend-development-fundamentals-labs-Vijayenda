@@ -1,0 +1,318 @@
+{
+  "info": {
+    "_postman_id": "b18e72c4-8f9a-4c20-a1b2-lab03collection",
+    "name": "Lab 3: REST API, Query Params, Validation & Filtering",
+    "description": "Course: Backend Development Fundamentals (Year II Term II · Aurora)\nFaculty: Yugandhar Gurjalwar\nStudent: Gorrela Vijayendra (252U1R6085)\nComplete test suite covering all success and failure cases.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. GET All Books (Default Query)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books"]
+        },
+        "description": "Returns books with default limit=10, offset=0, order_by=id, order=ASC (200 OK)"
+      },
+      "response": []
+    },
+    {
+      "name": "2. GET Search by Title (?search_q=Potter)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books?search_q=Potter",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books"],
+          "query": [
+            {
+              "key": "search_q",
+              "value": "Potter"
+            }
+          ]
+        },
+        "description": "Searches for books with title containing 'Potter' using LIKE (200 OK)"
+      },
+      "response": []
+    },
+    {
+      "name": "3. GET Sort & Pagination (?order_by=price&order=DESC&limit=3)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books?order_by=price&order=DESC&limit=3",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books"],
+          "query": [
+            {
+              "key": "order_by",
+              "value": "price"
+            },
+            {
+              "key": "order",
+              "value": "DESC"
+            },
+            {
+              "key": "limit",
+              "value": "3"
+            }
+          ]
+        },
+        "description": "Sorts books by price descending with limit 3 (200 OK)"
+      },
+      "response": []
+    },
+    {
+      "name": "4. GET Price Range Filter (?min_price=300&max_price=450)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books?min_price=300&max_price=450",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books"],
+          "query": [
+            {
+              "key": "min_price",
+              "value": "300"
+            },
+            {
+              "key": "max_price",
+              "value": "450"
+            }
+          ]
+        },
+        "description": "Filters books between 300 and 450 using SQL BETWEEN (200 OK)"
+      },
+      "response": []
+    },
+    {
+      "name": "5. GET Single Book by ID (Success 200)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "1"]
+        },
+        "description": "Retrieves book with ID 1 (200 OK)"
+      },
+      "response": []
+    },
+    {
+      "name": "6. GET Book by ID - Missing Record (Failure 404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/999",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "999"]
+        },
+        "description": "Returns 404 Not Found when ID does not exist"
+      },
+      "response": []
+    },
+    {
+      "name": "7. POST Create Book (Success 201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Refactoring: Improving the Design of Existing Code\",\n  \"author\": \"Martin Fowler\",\n  \"price\": 550,\n  \"pages\": 448\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books"]
+        },
+        "description": "Creates a new book and returns generated bookId (201 Created)"
+      },
+      "response": []
+    },
+    {
+      "name": "8. POST Create Book - Missing Title (Validation Failure 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"author\": \"Anonymous\",\n  \"price\": 299,\n  \"pages\": 200\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books"]
+        },
+        "description": "Validation rejects missing title with 400 Bad Request"
+      },
+      "response": []
+    },
+    {
+      "name": "9. POST Create Book - Non-numeric Price (Validation Failure 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Invalid Pricing Book\",\n  \"author\": \"Test Author\",\n  \"price\": \"free\",\n  \"pages\": 150\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books"]
+        },
+        "description": "Validation rejects non-numeric price with 400 Bad Request"
+      },
+      "response": []
+    },
+    {
+      "name": "10. PUT Update Book (Success 200)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Refactoring (Second Edition)\",\n  \"author\": \"Martin Fowler\",\n  \"price\": 600,\n  \"pages\": 480\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "1"]
+        },
+        "description": "Updates book with ID 1 (200 OK)"
+      },
+      "response": []
+    },
+    {
+      "name": "11. PUT Update Book - Missing Record (Failure 404)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Non Existent\",\n  \"author\": \"Ghost\",\n  \"price\": 500,\n  \"pages\": 100\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/999",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "999"]
+        },
+        "description": "Returns 404 Not Found when updating non-existent book"
+      },
+      "response": []
+    },
+    {
+      "name": "12. DELETE Remove Book (Success 200)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/12",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "12"]
+        },
+        "description": "Deletes book with ID 12 (200 OK)"
+      },
+      "response": []
+    },
+    {
+      "name": "13. DELETE Remove Book - Missing Record (Failure 404)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/999",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "999"]
+        },
+        "description": "Returns 404 Not Found when deleting non-existent book"
+      },
+      "response": []
+    }
+  ]
+}
