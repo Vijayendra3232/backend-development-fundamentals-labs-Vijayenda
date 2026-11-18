@@ -1,0 +1,184 @@
+{
+  "info": {
+    "_postman_id": "lab4-auth-jwt-vijayendra",
+    "name": "Lab 4: Registration, Login & JWT API",
+    "description": "Postman test collection for Lab 4 (Backend Development Fundamentals - Gorrela Vijayendra 252U1R6085). Covers valid and invalid registration and login requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. GET / - Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/",
+          "host": ["{{baseUrl}}"],
+          "path": [""]
+        }
+      }
+    },
+    {
+      "name": "2. POST /register/ - Register New User (201 Created)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"rahul_aurora\",\n  \"name\": \"Rahul Sharma\",\n  \"password\": \"SecurePass@123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/register/",
+          "host": ["{{baseUrl}}"],
+          "path": ["register", ""]
+        }
+      }
+    },
+    {
+      "name": "3. POST /register/ - Duplicate Username (400 Bad Request)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"rahul_aurora\",\n  \"name\": \"Rahul Sharma\",\n  \"password\": \"SecurePass@123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/register/",
+          "host": ["{{baseUrl}}"],
+          "path": ["register", ""]
+        }
+      }
+    },
+    {
+      "name": "4. POST /register/ - Missing/Short Password (400 Bad Request)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"short_pass_user\",\n  \"name\": \"Test User\",\n  \"password\": \"123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/register/",
+          "host": ["{{baseUrl}}"],
+          "path": ["register", ""]
+        }
+      }
+    },
+    {
+      "name": "5. POST /login/ - Valid Login Returns JWT (200 OK)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"rahul_aurora\",\n  \"password\": \"SecurePass@123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/login/",
+          "host": ["{{baseUrl}}"],
+          "path": ["login", ""]
+        }
+      }
+    },
+    {
+      "name": "6. POST /login/ - Unknown Username (400 Bad Request)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"unknown_ghost\",\n  \"password\": \"SecurePass@123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/login/",
+          "host": ["{{baseUrl}}"],
+          "path": ["login", ""]
+        }
+      }
+    },
+    {
+      "name": "7. POST /login/ - Wrong Password (400 Bad Request)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"rahul_aurora\",\n  \"password\": \"WrongPassword!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/login/",
+          "host": ["{{baseUrl}}"],
+          "path": ["login", ""]
+        }
+      }
+    }
+  ]
+}
