@@ -10,9 +10,16 @@
 
 ## Live Link
 
-- **Production Live URL (Railway):** *Pending Railway deploy*
+- **Production Live URL (Railway):** [https://lab-04-production.up.railway.app](https://lab-04-production.up.railway.app)
 - **Deployment Platform:** Railway (`backend-development-fundamentals`)
 - **Service Name:** `lab-04`
+- **Environment:** `production`
+- **Deployment Status:** `SUCCESS` (Active containerized Node.js runtime with native `bcrypt` and `sqlite3`)
+
+### Live Endpoint Quick Links:
+- **API Overview & Health Check (`GET /`):** [https://lab-04-production.up.railway.app/](https://lab-04-production.up.railway.app/)
+- **Register Endpoint (`POST /register/`):** `https://lab-04-production.up.railway.app/register/`
+- **Login Endpoint (`POST /login/`):** `https://lab-04-production.up.railway.app/login/`
 
 ---
 
